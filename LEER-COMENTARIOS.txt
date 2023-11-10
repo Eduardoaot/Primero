@@ -3,3 +3,8 @@ Eduardo: Bueno aqui hice lo que son los 2 primeros html, son solo boceto y exper
 la vvd es algo fea, pero si tienes alguna idea de como mejorarle avizame por whats.
 
 Además mensioname si ves todos los aspectos "bien" o si quieres que haga cambios, dime cuales te gustaria.
+
+Por si lo necesitas, aqui esta la paleta de colores y donde saque el boton:
+https://color.adobe.com/es/search?q=paginas%20web
+
+https://hackernoon.com/es/los-24-mejores-css-free-to-use-buttons-with-codepen-examples
