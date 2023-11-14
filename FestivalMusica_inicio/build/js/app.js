@@ -27,7 +27,7 @@ function navegacionFija(){
 
 function scrollNav(){
  
-    const enlaces = document.querySelectorAll('.navegacion-principal a');
+    const enlaces = document.querySelectorAll('.navegacion-principal .ban');
  
     enlaces.forEach( enlace => {
         enlace.addEventListener('click', function(e) {
