@@ -6,6 +6,14 @@ function iniciarApp(){
     navegacionFija();
     crearGaleria();
     scrollNav();
+    registro();
+}
+
+function registro(){
+    const boton = document.querySelector('button')
+    boton.addEventListener('click', function(){
+        window.location.href = '../registro.html';
+    });
 }
 
 function navegacionFija(){
@@ -27,7 +35,7 @@ function navegacionFija(){
 
 function scrollNav(){
  
-    const enlaces = document.querySelectorAll('.navegacion-principal a');
+    const enlaces = document.querySelectorAll('.navegacion-principal .ban');
  
     enlaces.forEach( enlace => {
         enlace.addEventListener('click', function(e) {

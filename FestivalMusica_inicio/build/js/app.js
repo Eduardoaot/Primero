@@ -6,6 +6,14 @@ function iniciarApp(){
     navegacionFija();
     crearGaleria();
     scrollNav();
+    registro();
+}
+
+function registro(){
+    const boton = document.querySelector('button')
+    boton.addEventListener('click', function(){
+        window.location.href = '../registro.html';
+    });
 }
 
 function navegacionFija(){
