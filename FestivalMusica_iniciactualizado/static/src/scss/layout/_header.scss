@@ -4,7 +4,7 @@
 .header{
     background-color: v.$verde;
 
-    @include m.tablet {
+    @include m.tablet{
         &.fijo{
             position: fixed;
             left: 0;
@@ -52,6 +52,9 @@
 
     }
 }
+
+
+
 
 
 

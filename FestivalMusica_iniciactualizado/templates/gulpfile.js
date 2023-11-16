@@ -9,7 +9,7 @@ const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
 
 //javascript
-const terser = require('gulp-tercer-js');
+const terser = require('gulp-terser-js');
 
 //img
 const avif = require('gulp-avif');
@@ -19,7 +19,7 @@ const cache = require("gulp-cache");
 
 
 function javascript( done ){
-    src('src/js/**/*js')
+    src('src/js/**/*.js')
     .pipe(dest('build/js'))
     done();
 }

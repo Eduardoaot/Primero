@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='/build/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/build/css/style.css') }}">
 </head>
 <body>
     <div class="formulario">
@@ -16,7 +16,7 @@
                 {{ error }}
             </div>
         {% endif %}
-        <form method="post">
+        <form method="post" action="{{ url_for('iniciosesion') }}">
             <div class="username">
                 <input type="text" name="username" required>
                 <label>Nombre de usuario</label>
@@ -27,9 +27,10 @@
             </div>
             <input type="submit" value="Iniciar">
             <div class="registrarse">
-                ¿No tienes cuenta? <a href="#">Registrarse</a>
+                ¿No tienes cuenta?  <a href="{{ url_for('registro') }}">Registrarse</a>
             </div>
         </form>
     </div>
 </body>
 </html>
+

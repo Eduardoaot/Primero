@@ -17,13 +17,12 @@
         <h1>Rock & EDM Festival</h1>
 
 
-    <nav class="navegacion-principal">
-        <a class="ban" href="#lineup">Line Up</a>
-        <a class="ban" href="#galeria">Galeria</a>
-        <a class="ban" href="#boletos">Boletos</a>
-        <a href="{{ url_for('iniciosesion') }}">Iniciar sesión</a>
-    </nav>
-
+        <nav class="navegacion-principal">
+            <a class="ban" href="#lineup">Line Up</a>
+            <a class="ban" href="#galeria">Galeria</a>
+            <a class="ban" href="#boletos">Boletos</a>
+            <a href="{{ url_for('iniciosesion') }}">Iniciar sesión</a>
+        </nav>
         
     </div>
    </header>
@@ -225,6 +224,12 @@
             <footer class="pase-footer">
                 <p>$180</p>
             </div>
+        </div>
+
+        <div class = "boton">
+            <button class = "gradient">
+                <a href="{{ url_for('comprar_boletos') }}">¡Compra tus boletos aquí!</a>
+            </button>
         </div>
    </section>
 

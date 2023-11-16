@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/build/css/style.css') }}">
+    <title>Registro|| Festival Rock & EDM</title>
+</head>
+<body>
+
+
+    <body>
+        <div class="formulario">
+            <h1>Registro</h1>
+            <form method="post" action="{{ url_for('registro') }}">
+                <div class="username">
+                    <input type="text" name="nuevo_usuario" required>
+                    <label>Nombre de usuario</label>
+                </div>
+                <div class="username">
+                    <input type="email" name="correo_electronico" required>
+                    <label>Correo Electrónico</label>
+                </div>
+                <div class="username">
+                    <input type="password" name="nueva_contrasena" required>
+                    <label>Contraseña</label>
+                </div>
+                <div class = "centro">
+                    <input type="submit" value="Registrarse">
+                </div>
+            </form>
+        </div>
+    </body>
+
+
+    
+</body>
+</html>

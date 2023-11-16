@@ -17,7 +17,7 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-html {
+ html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -652,6 +652,7 @@ img {
 
 .boletos {
   padding: 5rem 0;
+  z-index: -50;
 }
 .boletos h3 {
   text-align: center;
@@ -663,9 +664,71 @@ img {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5rem;
+    padding-bottom: 5rem;
   }
 }
 
+.boton {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.boton button {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  position: relative;
+  border-radius: 40px;
+  padding: 30px;
+  font-family: "Monserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  z-index: 1;
+}
+.boton button a {
+  color: white;
+  display: inline-block;
+}
+
+.gradient {
+  background-image: linear-gradient(to bottom right, white, violet, purple);
+  color: white;
+  cursor: pointer;
+  border: none;
+  padding: 16px 32px;
+  position: relative;
+  border-radius: 12px;
+  font-size: 20px;
+}
+.gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, violet, rgb(0, 192, 192), deeppink, rgb(49, 49, 209), red, #4CB8B3, deeppink, rgb(101, 14, 101));
+  background-size: 800%;
+  border-radius: 50px;
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+}
+.gradient:hover {
+  transform: scale(1.2);
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
 .pase {
   color: black;
 }
@@ -719,4 +782,9 @@ img {
   margin: 0;
   text-align: center;
   color: #fff;
+}
+
+main {
+  margin: 0 auto;
+  text-align: center;
 }
