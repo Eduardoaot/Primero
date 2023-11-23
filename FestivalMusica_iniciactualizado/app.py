@@ -8,10 +8,10 @@ clave_secreta = secrets.token_hex(16)
 app.secret_key = clave_secreta
 
 # Configuración de la conexión a la base de datos
-server = 'ANTONIO'
+server = 'DESKTOP-PAHF3E8'
 database = 'PROGRAWEB'
 username = 'sa'
-password = 'h9cmhlci'
+password = 'tronco'
 driver = 'ODBC Driver 17 for SQL Server'
 
 # Configuración de la conexión a la base de datos

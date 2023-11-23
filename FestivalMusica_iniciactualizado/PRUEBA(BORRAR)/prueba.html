@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style2.css">
+    <title>Carrito || Rock & EDM</title>
+</head>
+<body>
+<header class="header">
+        <div class="contenedor contenido-header">
+            <h1>Rock & EDM Festival</h1>
+    
+            <nav class="navegacion-principal">
+                <a href="#">Hola {{ nombre_usuario }}</a>
+                <a href="{{ url_for('cerrar_sesion') }}">Cerrar sesión</a>
+            </nav>
+            
+        </div>
+</header>
+
+<main class="grid-container">
+
+
+<div class="ticket1" id="normal-ticket">
+    <h2>Pase 1 Día</h2>
+	<h4>Viernes 21 o Sabado 22</h4>
+	<img src="imagenes/tiket3.png" class="prom"></img>
+    <p>Precio: $100</p>
+    <button onclick="addToCart('Pase 1 Día  - 100 ', 100)"><img src="imagenes/image.png"></img></button>
+</div>
+
+<div id="cart">
+    <h2>Carrito</h2>
+    <p>Total de productos: <span id="total-products">0</span></p>
+    <p>Total a pagar: $<span id="total-amount">0.00</span></p>
+    <ul id="cart-items"></ul>
+	<div class="comprar-pdf" onclick="purchaseAndGeneratePDF()">Completar compra</div>
+	<h6>Al realizar la compra, ya no hay rembolsos.</h6>
+</div>
+
+<div class="ticket2" id="vip-ticket">
+    <h2>Pase 2 Días</h2>
+	<h4>Viernes 21 y Sabado 22</h4>
+	<img src="imagenes/tiket4.png" class="prom"></img>
+    <p>Precio: $180</p>
+    <button onclick="addToCart('Pase 2 Días - 180 ', 180)"><img src="imagenes/image.png"></img></button>
+</div>
+
+<div class="formulario">
+    <h1>Agregar método de pago (SOLO TARJETA)</h1>
+    <form method="post">
+        <div class="form-group">
+            <input type="text" id="username" required>
+            <label for="username">Nombre que figura en la tarjeta</label>
+        </div>
+		
+		<div class="form-group">
+			<br>
+            <select id="payment-method" name="payment-method">
+                <option value="debito">Tarjeta de Débito</option>
+                <option value="credito">Tarjeta de Crédito</option>
+            </select>
+			<label for="payment-method">Método de Pago</label>
+		</div>
+		<div class="form-group">
+			<input type="text" id="card-number" name="card-number" required>
+            <label for="card-number">Número de la Tarjeta</label>
+		</div>
+		<div class="form-group">
+            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+            <label for="expiry-date">Fecha de Vencimiento</label>		
+		</div>
+		<div class="form-group">
+            <input type="text" id="security-code" name="security-code" required>
+			<label for="security-code">Código de Seguridad</label>
+        </div>
+		<hr></hr>
+		<p>Rock & EDM Festival acepta la mayoría de las tarjetas de crédito y débito:</p>
+		<br>
+		<img src="imagenes/tarjetas.png" class="tarjeta"></img>
+
+		 
+    </form>
+</div>
+
+<div id="ticket">
+    <h2>¡Gracias por su compra!</h2>
+    <p>Nombre: <span id="ticket-username"></span></p>
+    <p>Compra: <br> <span id="ticket-items"></span></p>
+    <p>Total de productos: <span id="ticket-total-products"></span></p>
+    <p>Total a pagar: $<span id="ticket-total-amount"></span></p>
+	<div>
+    <script>
+        date = new Date().toLocaleDateString();
+        document.write(date);
+    </script>
+	<p>MOSTAR ESTE RECIBO IMPRESO PARA PODER ENTRAR AL FESTIVAL</p>
+</div>
+</div>
+</main>
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<script>
+    const cart = {
+        items: {},
+        totalProducts: 0,
+        totalAmount: 0,
+    };
+
+    function addToCart(item, price) {
+        if (cart.items[item]) {
+            cart.items[item].quantity++;
+        } else {
+            cart.items[item] = {
+                price: price,
+                quantity: 1
+            };
+        }
+
+        cart.totalProducts++;
+        cart.totalAmount += price;
+
+        updateCart();
+    }
+
+    function removeFromCart(item) {
+        if (cart.items[item]) {
+            const price = cart.items[item].price;
+            const quantity = cart.items[item].quantity;
+
+            if (quantity > 1) {
+                cart.items[item].quantity--;
+            } else {
+                delete cart.items[item];
+            }
+
+            cart.totalProducts--;
+            cart.totalAmount -= price;
+
+            updateCart();
+        }
+    }
+
+    function updateCart() {
+        const cartItems = document.getElementById("cart-items");
+        const totalProducts = document.getElementById("total-products");
+        const totalAmount = document.getElementById("total-amount");
+
+        cartItems.innerHTML = '';
+        totalProducts.textContent = cart.totalProducts;
+        totalAmount.textContent = cart.totalAmount.toFixed(2);
+
+        for (const item in cart.items) {
+            const cartItem = document.createElement("li");
+            cartItem.innerHTML = `${item} x${cart.items[item].quantity} - $${(cart.items[item].price * cart.items[item].quantity).toFixed(2)} 
+            <span class="remove-item" onclick="removeFromCart('${item}')">(ELIMINAR)</span>`;
+            cartItems.appendChild(cartItem);
+        }
+    }
+
+    function purchaseAndGeneratePDF() {
+        // Aquí puedes agregar la lógica para realizar la compra
+
+        // Obtener nombre de usuario
+        const username = document.getElementById("username").value;
+
+        // Generar el boleto
+        const ticketContent = generateTicketContent(username);
+
+        // Mostrar el boleto
+        document.getElementById("ticket-username").textContent = username;
+        document.getElementById("ticket-items").innerHTML = ticketContent;
+        document.getElementById("ticket-total-products").textContent = cart.totalProducts;
+        document.getElementById("ticket-total-amount").textContent = cart.totalAmount.toFixed(2);
+        document.getElementById("ticket").style.display = "block";
+        // Generar PDF con el contenido del boleto
+        generatePDF(document.getElementById("ticket").outerHTML);
+    }
+
+    function generateTicketContent(username) {
+        let content = '';
+
+        for (const item in cart.items) {
+            content += `${item} x${cart.items[item].quantity} - $${(cart.items[item].price * cart.items[item].quantity).toFixed(2)}<br>`;
+        }
+
+        return content;
+    }
+
+    function generatePDF(content) {
+        const element = document.createElement("div");
+        element.innerHTML = content;
+
+        html2pdf(element);
+    }
+</script>
+
+</body>
+</html>
