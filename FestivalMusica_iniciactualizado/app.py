@@ -2,16 +2,18 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import pyodbc
 import secrets
 import hashlib
+from datetime import datetime
+
 
 app = Flask(__name__)
 clave_secreta = secrets.token_hex(16)
 app.secret_key = clave_secreta
 
 # Configuración de la conexión a la base de datos
-server = 'DESKTOP-PAHF3E8'
+server = 'ANTONIO'
 database = 'PROGRAWEB'
 username = 'sa'
-password = 'tronco'
+password = 'h9cmhlci'
 driver = 'ODBC Driver 17 for SQL Server'
 
 # Configuración de la conexión a la base de datos
@@ -23,6 +25,30 @@ cursor = conn.cursor()
 def index():
     return render_template('index.html')
 
+@app.route('/tienda')
+def tienda():
+    return render_template('tienda.html')
+@app.route('/guardar_compra', methods=['POST'])
+def guardar_compra():
+    if request.method == 'POST':
+         # Cambia a 'nombre_comprador'
+        nombre_usuario = request.form['nombre_comprador']
+        productos = request.form['productos']
+        total_productos = request.form['total_productos']
+        total_pagar = request.form['total_pagar']
+    try:
+         # Modifica esta consulta según tu esquema de base de datos
+        cursor.execute("INSERT INTO detalle_venta (nombre_cliente, compra, total_productos, total_pagar, fecha) VALUES (?, ?, ?, ?, GETDATE())",
+                    nombre_usuario, productos, total_productos, total_pagar)
+        conn.commit()
+
+        return redirect(url_for('index'))
+    except Exception as e:
+            # Manejar excepciones, podrías mostrar un mensaje más específico según el error
+        error = f'Error al guardar la compra en la base de datos: {str(e)}'
+        return render_template('error.html', error=error)
+
+        
 @app.route('/index2')
 def index2():
     return render_template('index2.html')
@@ -72,7 +98,7 @@ def iniciosesion():
                 # Limpia la variable de sesión
                 session.pop('compra_boletos', None)
                 # Redirige a la lista de espera
-                return redirect(url_for('listaespera'))
+                return redirect(url_for('tienda'))
             else:
                 # Redirige a la página principal u otra página según tus necesidades
                 return redirect(url_for('index2'))
