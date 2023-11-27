@@ -82,30 +82,42 @@ def iniciosesion():
         # Verificar las credenciales en la base de datos
         cursor.execute("SELECT * FROM Usuario WHERE Usuario = ? AND Contraseña = ?", username, hashed_password)
         user = cursor.fetchone()
+
         if user:
             # Inicio de sesión exitoso
-            # Obtén los nombres de las columnas
-            column_names = [column[0] for column in cursor.description]
+            # Obtén información adicional del usuario
+            cursor.execute("SELECT * FROM Usuario WHERE Usuario = ?", username)
+            user_info = cursor.fetchone()
 
-            # Obtén el nombre de usuario usando los nombres de las columnas
-            nombre_usuario = user[column_names.index('Usuario')]
+            if user_info:
+                # Obtén los nombres de las columnas
+                column_names = [column[0] for column in cursor.description]
 
-            # Guarda el nombre de usuario en la sesión
-            session['nombre_usuario'] = nombre_usuario
+                # Obtén el nombre de usuario usando los nombres de las columnas
+                nombre_usuario = user_info[column_names.index('Usuario')]
 
-            # Verifica si la variable de sesión 'compra_boletos' está presente
-            if session.get('compra_boletos'):
-                # Limpia la variable de sesión
-                session.pop('compra_boletos', None)
-                # Redirige a la lista de espera
-                return redirect(url_for('tienda'))
+                # Guarda información adicional en la sesión
+                session['nombre_usuario'] = nombre_usuario
+                session['correo_usuario'] = user_info[column_names.index('Correo_Electronico')]
+
+                # Verifica si la variable de sesión 'compra_boletos' está presente
+                if session.get('compra_boletos'):
+                    # Limpia la variable de sesión
+                    session.pop('compra_boletos', None)
+                    # Redirige a la lista de espera
+                    return redirect(url_for('tienda'))
+                else:
+                    # Redirige a la página principal u otra página según tus necesidades
+                    return redirect(url_for('index2'))
             else:
-                # Redirige a la página principal u otra página según tus necesidades
-                return redirect(url_for('index2'))
+                # Manejar el caso en el que no se pueda obtener información adicional del usuario
+                error = 'Error al obtener información del usuario.'
+                return render_template('iniciosesion.html', error=error)
         else:
             # Inicio de sesión fallido
             error = 'Credenciales incorrectas. Inténtalo de nuevo.'
             return render_template('iniciosesion.html', error=error)
+
     return render_template('iniciosesion.html')
 
 @app.route('/listaespera')
@@ -149,4 +161,4 @@ def registro():
     return render_template('registro.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 

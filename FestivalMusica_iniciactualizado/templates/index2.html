@@ -48,12 +48,16 @@
         </div>
         <div class="contenido-festival">
             <h2>Rock & EDM Festival</h2>
-            <p class = "fecha">Noviembre 2023, Monterrey, México</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore a ad commodi, magnam 
-            vero eligendi consequatur aperiam ut pariatur ab quae ipsum sed porro voluptates odio dicta 
-            repudiandae sapiente deserunt.
-            </p>
-
+            <p class="fecha">Noviembre 2023, Monterrey, México</p>
+            
+            {% if 'nombre_usuario' in session %}
+            <p>¡Hola, {{ session['nombre_usuario'] }}!</p>
+            <p>Correo electrónico: {{ session['correo_usuario'] }}</p>
+        {% else %}
+            <p>Por favor, inicia sesión para ver esta página.</p>
+        {% endif %}
+            <p>El festival de este año, contará con la participación de 23 bandas. 
+                El objetivo primordial del festival “Rock X la paz (Rock por la paz), es conjuntar bandas destacadas de rock en español, para comunicar un mensaje de prevención del suicidio, las causas que pueden provocarlo y el apoyo de medios de contacto para atención en crisis.</p>
         </div>
    </section>
 
